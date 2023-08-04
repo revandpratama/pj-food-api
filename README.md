@@ -7,15 +7,28 @@ Using Laravel Sanctum for token generation
 
 Every food routes require token bearer Authorization header
 
-## Info
+### Info
  - GET: /api
 
-## Users
+### Users
  - POST: /api/users/authenticate
  
-## Food
+### Food
  - GET: /api/foods/
  - GET: /api/foods/{id}
  - POST: /api/foods/
  - PUT: /api/foods/{id}
  - DELETE: /api/foods/delete/{id}
+
+## Test
+
+### Tests\Feature\AuthenticationTest
+  - Invalid login credentials
+  - if user exists
+  - if user already authenticated
+  - everything going normal
+
+### Tests\Feature\FoodTest
+  - must authenticated and retrieve data
+  - if data invalid 
+  - if food is actually exist
