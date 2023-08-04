@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\FoodController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FoodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,10 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
+
+    Route::get('/me', function() {
+        return response()->json(auth('sanctum')->user());
+    });
     Route::resource('/foods', FoodController::class);
     
 

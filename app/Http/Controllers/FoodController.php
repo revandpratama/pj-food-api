@@ -6,6 +6,7 @@ use App\Models\Food;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class FoodController extends Controller
@@ -15,13 +16,21 @@ class FoodController extends Controller
      */
     public function index(Request $request)
     {
-        $bearerToken = $request->bearerToken();
+        // $bearerToken = $request->bearerToken();
 
-        if ($bearerToken === null) {
+        // if ($bearerToken === null) {
+        //     return response()->json([
+        //         'message' => 'Unauthenticated'
+        //     ], 401, ['Content-Type' => 'application/json']);
+        // }
+
+        if (!Auth::check()) {
             return response()->json([
                 'message' => 'Unauthenticated'
             ], 401, ['Content-Type' => 'application/json']);
         }
+
+        
 
         $foods = Food::all();
         $links = [];
@@ -58,9 +67,7 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        $bearerToken = $request->bearerToken();
-
-        if ($bearerToken === null) {
+        if (!Auth::check()) {
             return response()->json([
                 'message' => 'Unauthenticated'
             ], 401, ['Content-Type' => 'application/json']);
@@ -95,9 +102,7 @@ class FoodController extends Controller
      */
     public function show(Food $food, Request $request)
     {
-        $bearerToken = $request->bearerToken();
-
-        if ($bearerToken === null) {
+        if (!Auth::check()) {
             return response()->json([
                 'message' => 'Unauthenticated'
             ], 401, ['Content-Type' => 'application/json']);
@@ -131,9 +136,7 @@ class FoodController extends Controller
      */
     public function update(Request $request, Food $food)
     {
-        $bearerToken = $request->bearerToken();
-
-        if ($bearerToken === null) {
+        if (!Auth::check()) {
             return response()->json([
                 'message' => 'Unauthenticated'
             ], 401, ['Content-Type' => 'application/json']);
@@ -171,9 +174,7 @@ class FoodController extends Controller
     public function destroy(Food $food, Request $request)
     {
 
-        $bearerToken = $request->bearerToken();
-
-        if ($bearerToken === null) {
+        if (!Auth::check()) {
             return response()->json([
                 'message' => 'Unauthenticated'
             ], 401, ['Content-Type' => 'application/json']);

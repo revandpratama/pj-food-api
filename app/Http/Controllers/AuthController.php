@@ -40,7 +40,7 @@ class AuthController extends Controller
             ], 404, ['Content-Type' => 'application/json']);
         }
         
-        if(auth()->user()) {
+        if(auth('sanctum')->user() != null) {
             return response()->json([
                 'message' => 'Already Authenthicated'
             ], 403, ['Content-Type' => 'application/json']);
