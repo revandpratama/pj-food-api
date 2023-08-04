@@ -36,3 +36,7 @@ Route::get('/', function() {
 Route::middleware(['guest'])->group(function () {
     Route::post('/users/authenticate', [AuthController::class, 'login']);
 });
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/users/authenticate/logout', [AuthController::class, 'logout']);
+});

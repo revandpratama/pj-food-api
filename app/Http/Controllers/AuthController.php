@@ -17,6 +17,8 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6|regex:/[0-9]+/|regex:/[a-zA-Z]+/'
         ]);
+        
+
 
         if ($credentials->fails()) {
             $errors = $credentials->errors();
@@ -28,8 +30,8 @@ class AuthController extends Controller
             ], 422, ['Content-Type' => 'application/json']);
         }
 
-        
-        $user =  User::where('email', $credentials['email'])->first();
+
+        $user =  User::where('email', $request->email)->first();
         if ($user == null){
             return response()->json([
                 'message' => 'Account is not found'
@@ -42,16 +44,33 @@ class AuthController extends Controller
             ], 403, ['Content-Type' => 'application/json']);
         }
 
-        if(!Auth::attempt($credentials)){
+        if(Auth::attempt($request->only(['email', 'password']))){
+            $user = User::where('email', $request->email)->first();
+                // $user = User::where('email', $request->email)->first();
+
+            $user->tokens()->delete();
+
             return response()->json([
-                'message' => 'Invalid Credentials'
-            ], 401, ['Content-Type' => 'application/json']);
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 200, ['Content-Type' => 'application/json']);
         }
-
-
-        // * Request success
+        
         return response()->json([
-            'token' => 'token',
+            'message' => 'Invalid Credentials'
+        ], 401, ['Content-Type' => 'application/json']);
+
+    }
+
+
+    public function logout(Request $request) {
+        Auth::logout();
+ 
+        $request->session()->invalidate();
+    
+        $request->session()->regenerateToken();
+
+        return response()->json([
+            'message' => 'Logged out'
         ], 200, ['Content-Type' => 'application/json']);
     }
 }
