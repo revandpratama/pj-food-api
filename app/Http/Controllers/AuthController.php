@@ -28,6 +28,7 @@ class AuthController extends Controller
             ], 422, ['Content-Type' => 'application/json']);
         }
 
+        
         $user =  User::where('email', $credentials['email'])->first();
         if ($user == null){
             return response()->json([
@@ -40,7 +41,7 @@ class AuthController extends Controller
                 'message' => 'Already Authenthicated'
             ], 403, ['Content-Type' => 'application/json']);
         }
-        
+
         if(!Auth::attempt($credentials)){
             return response()->json([
                 'message' => 'Invalid Credentials'
