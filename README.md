@@ -1,4 +1,4 @@
-### API for Food and Authentication
+# API for Food and Authentication
 
 Using Laravel Sanctum for token generation
 
@@ -7,13 +7,13 @@ Using Laravel Sanctum for token generation
 
 Every food routes require token bearer Authorization header
 
-# Info
+## Info
  - GET: /api
 
-# Users
+## Users
  - POST: /api/users/authenticate
  
-# Food
+## Food
  - GET: /api/foods/
  - GET: /api/foods/{id}
  - POST: /api/foods/
