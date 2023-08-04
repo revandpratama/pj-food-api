@@ -11,6 +11,8 @@ class AuthController extends Controller
 {
     public function login(Request $request) {
 
+        // return response()->json(['user' => auth('sanctum')->user()]);
+
         $allRequest = $request->all();
 
         $credentials = Validator::make($allRequest, [
@@ -63,14 +65,12 @@ class AuthController extends Controller
 
 
     public function logout(Request $request) {
-        Auth::logout();
- 
-        $request->session()->invalidate();
-    
-        $request->session()->regenerateToken();
+        if ($request->user()->currentAccessToken()->delete()) {
 
-        return response()->json([
-            'message' => 'Logged out'
-        ], 200, ['Content-Type' => 'application/json']);
+            return response()->json([
+                'message' => 'User Logged out'
+            ], 200, ['Content-Type' => 'application/json']);
+        }
+
     }
 }

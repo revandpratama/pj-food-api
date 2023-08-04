@@ -12,6 +12,6 @@ class FoodSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\Food::factory()->create();
     }
-}
+}   

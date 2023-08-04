@@ -17,7 +17,9 @@ class FoodFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => 'Rendang',
+            'price' => 23000,
+            'description' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora neque accusamus quis corrupti dolorem animi voluptatibus reprehenderit incidunt numquam accusantium!"
         ];
     }
 }
